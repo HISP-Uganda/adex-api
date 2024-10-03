@@ -25,6 +25,10 @@ function runAzCopy(command: string) {
 
 app.use("/*", cors());
 
+app.get("/", (c) => {
+    return c.text("Hello, World!");
+});
+
 app.post("/", async (c) => {
     const body = await c.req.parseBody();
     const file: any = body["file"];
