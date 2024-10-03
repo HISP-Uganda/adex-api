@@ -2,8 +2,8 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { writeFile, unlink } from "fs/promises";
 import { exec } from "child_process";
-
 import { cors } from "hono/cors";
+import "dotenv/config";
 
 const app = new Hono();
 
