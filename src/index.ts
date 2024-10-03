@@ -9,7 +9,7 @@ const app = new Hono();
 
 function runAzCopy(command: string) {
     return new Promise((resolve, reject) => {
-        exec(`azcopy ${command}`, (error, stdout, stderr) => {
+        exec(command, (error, stdout, stderr) => {
             if (error) {
                 reject(`Error: ${error.message}`);
                 return;
@@ -41,7 +41,7 @@ app.post("/", async (c) => {
         const buffer: any = Buffer.from(arrayBuffer);
         await writeFile(`./${file.name}`, buffer);
         const result = await runAzCopy(
-            `copy "*.csv" "${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}"`,
+            `${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}`,
         );
         await unlink(`./${file.name}`);
 
