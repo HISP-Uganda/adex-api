@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { writeFile } from "fs/promises";
+import { writeFile, unlink } from "fs/promises";
 import { exec } from "child_process";
 
 import { cors } from "hono/cors";
@@ -41,8 +41,10 @@ app.post("/", async (c) => {
         const buffer: any = Buffer.from(arrayBuffer);
         await writeFile(`./${file.name}`, buffer);
         const result = await runAzCopy(
-            `"${file.name}" "${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}"`,
+            `copy "*.csv" "${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}"`,
         );
+        await unlink(`./${file.name}`);
+
         return c.json(
             {
                 message: "File uploaded and saved successfully",
