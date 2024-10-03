@@ -38,10 +38,10 @@ app.post("/", async (c) => {
     }
     try {
         const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        const buffer: any = Buffer.from(arrayBuffer);
         await writeFile(`./${file.name}`, buffer);
         const result = await runAzCopy(
-            `copy "${file.name}" "${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}"`,
+            `"${file.name}" "${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}"`,
         );
         return c.json(
             {
