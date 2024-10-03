@@ -41,7 +41,7 @@ app.post("/", async (c) => {
         const buffer: any = Buffer.from(arrayBuffer);
         await writeFile(`./${file.name}`, buffer);
         const result = await runAzCopy(
-            `${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}`,
+            `copy ${file.name} ${process.env.AZURE_STORAGE_ACCOUNT_SAS_URL}`,
         );
         await unlink(`./${file.name}`);
 
