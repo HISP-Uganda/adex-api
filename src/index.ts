@@ -9,14 +9,12 @@ const app = new Hono();
 
 function runAzCopy(command: string) {
     return new Promise((resolve, reject) => {
-        exec(command, (error, stdout, stderr) => {
+        exec(`azcopy ${command}`, (error, stdout, stderr) => {
             if (error) {
-                console.log(error.message);
                 reject(`Error: ${error.message}`);
                 return;
             }
             if (stderr) {
-                console.log(stderr);
                 reject(`Stderr: ${stderr}`);
                 return;
             }
